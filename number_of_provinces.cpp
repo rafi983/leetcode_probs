@@ -1,0 +1,31 @@
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int n = static_cast<int>(isConnected.size());
+        vector<bool> visited(n, false);
+        int provinces = 0;
+
+        for (int city = 0; city < n; ++city) {
+            if (!visited[city]) {
+                ++provinces;
+                dfs(city, isConnected, visited);
+            }
+        }
+
+        return provinces;
+    }
+
+private:
+    void dfs(int city, vector<vector<int>>& isConnected, vector<bool>& visited) {
+        visited[city] = true;
+
+        for (int next = 0; next < static_cast<int>(isConnected.size()); ++next) {
+            if (isConnected[city][next] == 1 && !visited[next]) {
+                dfs(next, isConnected, visited);
+            }
+        }
+    }
+};
